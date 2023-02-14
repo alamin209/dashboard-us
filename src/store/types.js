@@ -33,4 +33,7 @@ export const DESELECT_SHEET = "DESELECT_SHEET";
 export const DESELECT_All_SHEETS = "DESELECT_All_SHEETS";
 export const UPDATE_SHEETS_FILTERS = "UPDATE_SHEETS_FILTERS";
 
+//category
+export const SAVE_CATEGORY_DATA = "SAVE_CATEGORY_DATA";
+
 export const RESET_STATE = "RESET_STATE";

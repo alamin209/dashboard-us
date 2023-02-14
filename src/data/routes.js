@@ -1,10 +1,10 @@
 import {
-  userIcon,
-  dashboardIcon,
   adminsIcon,
+  dashboardIcon,
+  excelFileIcon,
   questionsIcon,
   uploadsIcon,
-  excelFileIcon,
+  userIcon,
 } from "../helpers/icons";
 import { AdminRoles } from "./constants";
 
@@ -52,6 +52,12 @@ const pages = [
         allowedRoles: [AdminRoles.SUPER_ADMIN],
       },
     ],
+  },
+  {
+    name: "Category",
+    icon: adminsIcon("", 17, 17),
+    path: "/category",
+    allowedRoles: [AdminRoles.SUPER_ADMIN],
   },
 ];
 

@@ -1,37 +1,34 @@
 import {
-  SAVE_DASHBOARD_DATA,
-  SAVE_LOGGED_ADMIN_DATA,
-
+  DESELECT_ADMIN,
+  DESELECT_All_ADMINS,
+  DESELECT_All_QUESTIONS,
+  DESELECT_All_SHEETS,
+  DESELECT_All_USERS,
+  DESELECT_QUESTION,
+  DESELECT_SHEET,
+  DESELECT_USER,
   // Admins Actions
   SAVE_ADMINS_DATA,
-  SELECT_ADMIN,
-  DESELECT_ADMIN,
-  SELECT_All_ADMINS,
-  DESELECT_All_ADMINS,
-  UPDATE_ADMINS_FILTERS,
-
-  // Users Actions
-  SAVE_USERS_DATA,
-  SELECT_USER,
-  DESELECT_USER,
-  SELECT_All_USERS,
-  DESELECT_All_USERS,
-  UPDATE_USERS_FILTERS,
-
+  SAVE_CATEGORY_DATA,
+  SAVE_DASHBOARD_DATA,
+  SAVE_LOGGED_ADMIN_DATA,
   // Questions Actions
   SAVE_QUESTIONS_DATA,
-  SELECT_QUESTION,
-  SELECT_All_QUESTIONS,
-  DESELECT_QUESTION,
-  DESELECT_All_QUESTIONS,
-
   // Sheets Actions
   SAVE_SHEETS_DATA,
-  SELECT_SHEET,
+  // Users Actions
+  SAVE_USERS_DATA,
+  SELECT_ADMIN,
+  SELECT_All_ADMINS,
+  SELECT_All_QUESTIONS,
   SELECT_All_SHEETS,
-  DESELECT_SHEET,
-  DESELECT_All_SHEETS,
+  SELECT_All_USERS,
+  SELECT_QUESTION,
+  SELECT_SHEET,
+  SELECT_USER,
+  UPDATE_ADMINS_FILTERS,
   UPDATE_SHEETS_FILTERS,
+  UPDATE_USERS_FILTERS,
 } from "./types";
 
 // Data Actions
@@ -49,6 +46,12 @@ export const saveLoggedAdminData = (adminData) => ({
 export const saveAdminsData = (adminsData) => ({
   type: SAVE_ADMINS_DATA,
   payload: adminsData,
+});
+
+//category
+export const saveCategoryData = (categoryData) => ({
+  type: SAVE_CATEGORY_DATA,
+  payload: categoryData,
 });
 
 export const selectAdmin = (adminId) => ({
