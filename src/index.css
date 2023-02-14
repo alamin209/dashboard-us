@@ -1,0 +1,73 @@
+/* 
+==================
+ Import CSS Files 
+================== 
+*/
+
+@import url("./styles/tables.css");
+@import url("./styles/buttons.css");
+@import url("./styles/inputs.css");
+
+body {
+  @apply scrollbar bg-gray-100;
+}
+
+/* 
+==================
+ Fonts 
+================== 
+*/
+@font-face {
+  font-family: "Orbitron";
+  font-weight: 400;
+  src: url("./assets/fonts/Orbitron-Medium.ttf");
+}
+
+/* 
+==================
+  Tailwind Config
+================== 
+*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 
+==================
+ Add Custom Utilities
+==================
+*/
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: #dbeafe;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-primary-dimmed;
+    border-radius: 100vh;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary;
+  }
+}
+
+/* 
+==================
+  Override Styles
+==================
+*/
+
+.css-13cymwt-control {
+  @apply !rounded-lg;
+}
+
+.css-1jqq78o-placeholder {
+  @apply whitespace-nowrap overflow-hidden overflow-ellipsis;
+}

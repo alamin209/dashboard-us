@@ -1,0 +1,36 @@
+// Data Actions
+export const SAVE_DASHBOARD_DATA = "SAVE_DASHBOARD_DATA";
+export const SAVE_LOGGED_ADMIN_DATA = "SAVE_LOGGED_ADMIN_DATA";
+
+// Admins Actions
+export const SAVE_ADMINS_DATA = "SAVE_ADMINS_DATA";
+export const SELECT_ADMIN = "SELECT_ADMIN";
+export const SELECT_All_ADMINS = "SELECT_All_ADMINS";
+export const DESELECT_ADMIN = "DESELECT_ADMIN";
+export const DESELECT_All_ADMINS = "DESELECT_All_ADMINS";
+export const UPDATE_ADMINS_FILTERS = "UPDATE_ADMINS_FILTERS";
+
+// Users Actions
+export const SAVE_USERS_DATA = "SAVE_USERS_DATA";
+export const SELECT_USER = "SELECT_USER";
+export const SELECT_All_USERS = "SELECT_All_USERS";
+export const DESELECT_USER = "DESELECT_USER";
+export const DESELECT_All_USERS = "DESELECT_All_USERS";
+export const UPDATE_USERS_FILTERS = "UPDATE_USERS_FILTERS";
+
+// Questions Actions
+export const SAVE_QUESTIONS_DATA = "SAVE_QUESTIONS_DATA";
+export const SELECT_QUESTION = "SELECT_QUESTION";
+export const SELECT_All_QUESTIONS = "SELECT_All_QUESTIONS";
+export const DESELECT_QUESTION = "DESELECT_QUESTION";
+export const DESELECT_All_QUESTIONS = "DESELECT_All_QUESTIONS";
+
+// Sheets Actions
+export const SAVE_SHEETS_DATA = "SAVE_SHEETS_DATA";
+export const SELECT_SHEET = "SELECT_SHEET";
+export const SELECT_All_SHEETS = "SELECT_All_SHEETS";
+export const DESELECT_SHEET = "DESELECT_SHEET";
+export const DESELECT_All_SHEETS = "DESELECT_All_SHEETS";
+export const UPDATE_SHEETS_FILTERS = "UPDATE_SHEETS_FILTERS";
+
+export const RESET_STATE = "RESET_STATE";

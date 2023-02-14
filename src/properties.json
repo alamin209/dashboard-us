@@ -1,0 +1,18 @@
+{
+  "API_HOST": "http://localhost:8000",
+  "API_URL": "http://localhost:8000/api/v1",
+  "appearence": {
+    "primary_color": "#0A6B0D",
+    "primary_color_dimmed": "#0a6b0d47",
+    "secondary_color": "#858585",
+    "logo": "images/logo.png",
+    "favicon": "images/favicon.png"
+  },
+  "app_info": {
+    "name": "Agoverse Dashboard",
+    "description": "Agoverse Dashboard For System Management"
+  },
+  "storage": {
+    "cookie_name": "agoverse-dashboard-token"
+  }
+}

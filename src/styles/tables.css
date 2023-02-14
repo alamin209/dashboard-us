@@ -1,0 +1,11 @@
+.data-wrapper {
+  @apply inline-block min-w-full shadow rounded-lg overflow-hidden;
+}
+
+.data-row {
+  @apply px-5 py-5 border-b border-gray-200 bg-white text-sm;
+}
+
+.data-row-action-btn {
+  @apply bg-[#FAFAFA] text-white rounded-[10px] p-2 focus:outline-none focus:ring-0 border-[1px] border-[#E0E0E0];
+}
