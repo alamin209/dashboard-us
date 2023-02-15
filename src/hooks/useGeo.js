@@ -1,16 +1,18 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 // API
-import { getCountries, getStates, getCities } from "api/geo-data";
+import { getCategory, getCities, getCountries, getStates } from "api/geo-data";
 
 const useGeo = () => {
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
+  const [category, setCategory] = useState([]);
 
   const [isCountryLoading, setIsCountryLoading] = useState(false);
   const [isStateLoading, setIsStateLoading] = useState(false);
   const [isCityLoading, setIsCityLoading] = useState(false);
+  const [isCategoryLoading, setIsCategoryLoading] = useState(false);
 
   // Format Select Options
   const formatOptions = (data) => {
@@ -31,6 +33,18 @@ const useGeo = () => {
       setCountries([]);
     } finally {
       setIsCountryLoading(false);
+    }
+  };
+
+  const fetchCategory = async () => {
+    try {
+      setIsCategoryLoading(true);
+      const categoryList = await getCategory();
+      setCategory(categoryList);
+    } catch (error) {
+      setCategory([]);
+    } finally {
+      setIsCategoryLoading(false);
     }
   };
 
@@ -60,22 +74,27 @@ const useGeo = () => {
 
   useEffect(() => {
     fetchCountries();
+    fetchCategory();
   }, []);
 
   return {
     countries,
     states,
     cities,
+    category,
+    setCategory,
     setCountries,
     setStates,
     setCities,
     fetchCountries,
+    fetchCategory,
     fetchStates,
     fetchCities,
     isCountryLoading,
     isStateLoading,
     isCityLoading,
     formatOptions,
+    isCategoryLoading,
   };
 };
 
