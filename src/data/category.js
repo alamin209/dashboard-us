@@ -1,3 +1,5 @@
+//api
+
 export const CategoryTableHead = [
   { label: "", accessor: "checkbox" },
   { label: "Category", accessor: "name" },
@@ -27,5 +29,13 @@ export const CategoryInputs = {
       options: TypesSelectOptions,
     },
   ],
-  ParentId: [{ label: "ParentId", accessor: "parentId", type: "text" }],
+  Category: [
+    {
+      label: "ParentId",
+      accessor: "parentId",
+      type: "select",
+      isSearchable: true,
+      options: [],
+    },
+  ],
 };

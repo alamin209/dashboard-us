@@ -5,7 +5,7 @@ import Select from "react-select";
 import { toast } from "react-toastify";
 
 // API
-import { addAdmin } from "api/admins";
+import { addCategory } from "api/category";
 
 // Data
 import { CategoryInputs } from "data/category";
@@ -19,23 +19,36 @@ import { capitalize } from "helpers/functions";
 // Components
 import Header from "../../shared/Header";
 
+// Hooks
+import useGeo from "hooks/useGeo";
+
 // Assets
 import { leftArrowIcon, spinnerIcon } from "../../helpers/icons";
 
 const AddCategory = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const adminsDataFromStore = useSelector((state) => state.adminReducer);
+  const { fetchCategory, isCategoryLoading, formatOptions, category } =
+    useGeo();
+
+  const categoryDataFromStore = useSelector((state) => state.categoryReducer);
 
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
 
   const handleSelectOptions = (input) => {
+    if (input.accessor === "parentId") return formatOptions(category);
+
     return input.options;
   };
 
   const handleSelectValue = (input) => {
     if (!formData[input.accessor]) return null;
+
+    if (input.accessor === "parentId")
+      return category.find(
+        (singleCategory) => singleCategory._id === formData.singleCategory
+      );
 
     return input.options.find(
       (option) => option.value === formData[input.accessor]
@@ -47,44 +60,53 @@ const AddCategory = () => {
   };
 
   const handleLoadingSelect = (input) => {
+    if (input.accessor === "parentId" && isCategoryLoading) return true;
+
     return false;
   };
 
   const handleInputChange = (e, input) => {
-    setFormData({ ...formData, [input.accessor]: e.target.value });
+    if (e.target.type === "file") {
+      setFormData({ ...formData, [input.accessor]: e.target.files[0] });
+    } else {
+      setFormData({ ...formData, [input.accessor]: e.target.value });
+    }
   };
 
   const handleSelectChange = async (e, input) => {
     if (e) {
+      if (input.accessor === "parentId") await fetchCategory();
+
       setFormData({
         ...formData,
         [input.accessor]: e.value,
       });
-    } else {
-      delete formData[input.accessor];
-
-      setFormData({ ...formData });
     }
   };
-
-  // console.log("formData", formData);
 
   const renderedInputsSections = Object.keys(CategoryInputs).map((section) => {
     const renderedInputs = CategoryInputs[section].map((input) => (
       <div key={input.accessor}>
         <div className="relative">
           {input.type === "select" ? (
-            <Select
-              name="role"
-              value={handleSelectValue(input)}
-              options={handleSelectOptions(input)}
-              placeholder={`Select ${input.label}`}
-              isClearable={true}
-              onChange={(e) => handleSelectChange(e, input)}
-              isSearchable={input.isSearchable}
-              isDisabled={handleDisabledSelect(input)}
-              isLoading={handleLoadingSelect(input)}
-            />
+            <>
+              {formData.type !== "Subcategory" &&
+              input.accessor === "parentId" ? (
+                <></>
+              ) : (
+                <Select
+                  name="role"
+                  value={handleSelectValue(input)}
+                  options={handleSelectOptions(input)}
+                  placeholder={`Select ${input.label}`}
+                  isClearable={true}
+                  onChange={(e) => handleSelectChange(e, input)}
+                  isSearchable={input.isSearchable}
+                  isDisabled={handleDisabledSelect(input)}
+                  isLoading={handleLoadingSelect(input)}
+                />
+              )}
+            </>
           ) : (
             <>
               {input.type === "textArea" ? (
@@ -96,19 +118,12 @@ const AddCategory = () => {
                   cols="33"
                 />
               ) : (
-                <>
-                  {formData.type !== "Subcategory" &&
-                  input.accessor === "parentId" ? (
-                    <></>
-                  ) : (
-                    <input
-                      type={input.type}
-                      className="normal-input"
-                      placeholder={input.label}
-                      onChange={(e) => handleInputChange(e, input)}
-                    />
-                  )}
-                </>
+                <input
+                  type={input.type}
+                  className="normal-input"
+                  placeholder={input.label}
+                  onChange={(e) => handleInputChange(e, input)}
+                />
               )}
             </>
           )}
@@ -140,35 +155,36 @@ const AddCategory = () => {
     //   return toast.error("Password is required");
     // if (!formData.email) return toast.error("Email is required");
     // if (!isValidEmail(formData.email)) return toast.error("Invalid email");
+
+    //create from file upload formData object
+    let data = new FormData();
     if (formData.type === "Subcategory") {
       setFormData({ ...formData, parentId: formData.parentId });
-    } else {
-      setFormData({ ...formData, parentId: "" });
+      data.append("parentId", formData.parentId);
     }
+    data.append("name", formData.name);
+    data.append("details", formData.details);
+    data.append("feature_image", formData.feature_image);
+    data.append("icon", formData.icon);
+    data.append("slug", formData.slug);
 
     setLoading(true);
-
+    console.log("a", data);
     // Add Admin API
-    const response = await addAdmin(formData);
+    const response = await addCategory(data);
     setLoading(false);
 
     if (!response.success)
       return response.errors.forEach((msg) => toast.error(msg));
 
-    formData._id = response.data._id;
-    formData.createdAt = response.data.createdAt;
-    formData.updatedAt = response.data.updatedAt;
-
-    delete formData.password;
-
     dispatch(
       saveAdminsData({
-        ...adminsDataFromStore,
-        items: [formData, ...adminsDataFromStore.items],
+        ...categoryDataFromStore,
+        items: [formData, ...categoryDataFromStore.items],
       })
     );
-    toast.success("Admin added successfully");
-    navigate("/admins");
+    toast.success("Category added successfully");
+    navigate("/category");
   };
 
   return (

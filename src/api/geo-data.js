@@ -9,6 +9,15 @@ export const getCountries = async () => {
   }
 };
 
+export const getCategory = async () => {
+  try {
+    const response = await api().get(`/category`);
+    return response.data.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
 export const getStates = async (countryId) => {
   try {
     const response = await api().get(`/geo/states/${countryId}`);

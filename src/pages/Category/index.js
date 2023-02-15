@@ -46,22 +46,22 @@ const Category = () => {
     if ((!categoryDataFromStore.items.length && !noData) || refetch) {
       setIsFetching(true);
 
-      const fetchAdmins = await allCategory({
+      const fetchCategory = await allCategory({
         limit: itemsPerPage,
         ...options,
       });
       setIsFetching(false);
 
-      setData(fetchAdmins.data);
-      setTotalPages(fetchAdmins.totalPages);
+      setData(fetchCategory.data);
+      setTotalPages(fetchCategory.totalPages);
       dispatch(
         saveCategoryData({
-          items: fetchAdmins.data,
+          items: fetchCategory.data,
           currentPage: page ? page : currentPage,
-          totalPages: fetchAdmins.totalPages,
+          totalPages: fetchCategory.totalPages,
         })
       );
-      if (!fetchAdmins.data.length) {
+      if (!fetchCategory.data.length) {
         setNoData(true);
       } else {
         setNoData(false);

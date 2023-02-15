@@ -10,3 +10,12 @@ export const allCategory = async (options = {}) => {
     return error.response.data;
   }
 };
+
+export const addCategory = async (data) => {
+  try {
+    const response = await api().post("/category", data);
+    return response.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
