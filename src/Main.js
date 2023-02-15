@@ -24,6 +24,8 @@ import AddUser from "pages/Users/AddUser";
 import UpdateUser from "pages/Users/UpdateUser";
 
 import Category from "pages/Category";
+import AddCategory from "pages/Category/AddCategory";
+
 import SecurityQuestions from "pages/Security-Questions";
 import AddQuestion from "pages/Security-Questions/AddQuestion";
 import UpdateQuestion from "pages/Security-Questions/UpdateQuestion";
@@ -68,7 +70,7 @@ const Main = () => {
             </Route>
             <Route path="sheets" element={<Sheets />} />
             <Route path="category">
-              <Route path="add" element={<AddAdmin />} />
+              <Route path="add" element={<AddCategory />} />
               <Route path=":adminId/edit" element={<UpdateAdmin />} />
               <Route index element={<Category />} />
             </Route>

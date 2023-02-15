@@ -1,15 +1,14 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import Select from "react-select";
+import { toast } from "react-toastify";
 
 // API
 import { addAdmin } from "api/admins";
 
 // Data
-import { AdminInputs } from "data/admin";
+import { CategoryInputs } from "data/category";
 
 // Actions
 import { saveAdminsData } from "store/actions";
@@ -23,7 +22,7 @@ import Header from "../../shared/Header";
 // Assets
 import { leftArrowIcon, spinnerIcon } from "../../helpers/icons";
 
-const AddAdmin = () => {
+const AddCategory = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const adminsDataFromStore = useSelector((state) => state.adminReducer);
@@ -68,8 +67,10 @@ const AddAdmin = () => {
     }
   };
 
-  const renderedInputsSections = Object.keys(AdminInputs).map((section) => {
-    const rednderedInputs = AdminInputs[section].map((input) => (
+  // console.log("formData", formData);
+
+  const renderedInputsSections = Object.keys(CategoryInputs).map((section) => {
+    const renderedInputs = CategoryInputs[section].map((input) => (
       <div key={input.accessor}>
         <div className="relative">
           {input.type === "select" ? (
@@ -85,12 +86,24 @@ const AddAdmin = () => {
               isLoading={handleLoadingSelect(input)}
             />
           ) : (
-            <input
-              type={input.type}
-              className="normal-input"
-              placeholder={input.label}
-              onChange={(e) => handleInputChange(e, input)}
-            />
+            <>
+              {input.type === "textArea" ? (
+                <textarea
+                  className="normal-input"
+                  placeholder="Description"
+                  onChange={(e) => handleInputChange(e, input)}
+                  rows="5"
+                  cols="33"
+                />
+              ) : (
+                <input
+                  type={input.type}
+                  className="normal-input"
+                  placeholder={input.label}
+                  onChange={(e) => handleInputChange(e, input)}
+                />
+              )}
+            </>
           )}
         </div>
       </div>
@@ -103,10 +116,9 @@ const AddAdmin = () => {
             {capitalize(section)}
           </h2>
           <div className="max-w-sm mx-auto space-y-5 md:w-2/3">
-            {rednderedInputs}
+            {renderedInputs}
           </div>
         </div>
-        <hr className="m-0" />
       </div>
     );
   });
@@ -147,15 +159,15 @@ const AddAdmin = () => {
 
   return (
     <div>
-      <Header title="Admins" />
+      <Header title="Category" />
 
       <div className="pb-3">
         <div className="flex flex-row mb-1 sm:mb-0 items-center gap-4 w-full">
-          <Link to="/admins" className="btn">
+          <Link to="/category" className="btn">
             {leftArrowIcon()} Back
           </Link>
           <h2 className="text-2xl leading-tight text-slate-600 font-medium">
-            Add Admins
+            Add Category
           </h2>
         </div>
 
@@ -166,7 +178,7 @@ const AddAdmin = () => {
           <div className="p-4 bg-gray-100 border-t-2 border-primary rounded-lg bg-opacity-5">
             <div className="max-w-sm mx-auto md:w-full md:mx-0">
               <div className="inline-flex items-center space-x-4">
-                <h1 className="text-gray-600 font-medium">New Admin</h1>
+                <h1 className="text-gray-600 font-medium">New Category</h1>
               </div>
             </div>
           </div>
@@ -174,7 +186,7 @@ const AddAdmin = () => {
             {renderedInputsSections}
             <div className="w-full px-4 pb-4 ml-auto text-gray-500 md:w-1/3">
               <button type="submit" className="submit-btn">
-                {loading ? spinnerIcon() : "Add Admin"}
+                {loading ? spinnerIcon() : "Add Category"}
               </button>
             </div>
           </div>
@@ -184,4 +196,4 @@ const AddAdmin = () => {
   );
 };
 
-export default AddAdmin;
+export default AddCategory;

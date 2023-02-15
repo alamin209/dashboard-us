@@ -1,3 +1,4 @@
+import properties from "properties.json";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -80,7 +81,7 @@ const CategoryItem = ({ category }) => {
         <td className="data-row hidden md:table-cell">
           <img
             className="object-fill h-48 w-96 rounded-md"
-            src={`https://agoverse.us/backend/${category.feature_image}`}
+            src={`${properties.API_HOST}/${category.feature_image}`}
             alt="advertiseImage"
           />
         </td>

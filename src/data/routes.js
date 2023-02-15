@@ -1,5 +1,6 @@
 import {
   adminsIcon,
+  categoryIcon,
   dashboardIcon,
   excelFileIcon,
   questionsIcon,
@@ -55,7 +56,7 @@ const pages = [
   },
   {
     name: "Category",
-    icon: adminsIcon("", 17, 17),
+    icon: categoryIcon("", 17, 17),
     path: "/category",
     allowedRoles: [AdminRoles.SUPER_ADMIN],
   },

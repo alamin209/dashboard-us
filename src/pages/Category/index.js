@@ -116,7 +116,7 @@ const Category = () => {
           filterFields={AdminFilters}
           updateFiltersAction={updateAdminsFilters}
           deselectAction={deselectAllAdmins}
-          addBtnURL="/admins/add"
+          addBtnURL="/category/add"
           addBtnName="Category"
         />
 
