@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 // Helpers
 import GuestRoute from "helpers/routes/GuestRoute";
@@ -11,8 +11,8 @@ import DocumentHead from "shared/DocumentHead";
 import Layout from "components/Layout";
 
 // =============== Pages ===============
-import Login from "pages/Login";
 import Dashboard from "pages/Dashboard";
+import Login from "pages/Login";
 import Sheets from "pages/Sheets";
 
 import Admins from "pages/Admins";
@@ -22,6 +22,9 @@ import UpdateAdmin from "pages/Admins/UpdateAdmin";
 import Users from "pages/Users";
 import AddUser from "pages/Users/AddUser";
 import UpdateUser from "pages/Users/UpdateUser";
+
+import Category from "pages/Category";
+import AddCategory from "pages/Category/AddCategory";
 
 import SecurityQuestions from "pages/Security-Questions";
 import AddQuestion from "pages/Security-Questions/AddQuestion";
@@ -66,6 +69,11 @@ const Main = () => {
               <Route index element={<SecurityQuestions />} />
             </Route>
             <Route path="sheets" element={<Sheets />} />
+            <Route path="category">
+              <Route path="add" element={<AddCategory />} />
+              <Route path=":adminId/edit" element={<UpdateAdmin />} />
+              <Route index element={<Category />} />
+            </Route>
             <Route index element={<Dashboard />} />
           </Route>
         </Routes>
