@@ -14,7 +14,7 @@ import { CategoryInputs } from "data/category";
 import { saveAdminsData } from "store/actions";
 
 // Helpers
-import { capitalize, isValidEmail } from "helpers/functions";
+import { capitalize } from "helpers/functions";
 
 // Components
 import Header from "../../shared/Header";
@@ -96,12 +96,19 @@ const AddCategory = () => {
                   cols="33"
                 />
               ) : (
-                <input
-                  type={input.type}
-                  className="normal-input"
-                  placeholder={input.label}
-                  onChange={(e) => handleInputChange(e, input)}
-                />
+                <>
+                  {formData.type !== "Subcategory" &&
+                  input.accessor === "parentId" ? (
+                    <></>
+                  ) : (
+                    <input
+                      type={input.type}
+                      className="normal-input"
+                      placeholder={input.label}
+                      onChange={(e) => handleInputChange(e, input)}
+                    />
+                  )}
+                </>
               )}
             </>
           )}
@@ -111,9 +118,11 @@ const AddCategory = () => {
 
     return (
       <div key={section}>
-        <div className="items-center w-full p-4 space-y-4 text-gray-500 md:inline-flex md:space-y-0">
+        <div className="items-center w-full p-2 space-y-4 text-gray-500 md:inline-flex md:space-y-0">
           <h2 className="max-w-sm mx-auto md:w-1/3 font-medium">
-            {capitalize(section)}
+            {section === "ParentId" && formData.type !== "Subcategory"
+              ? ""
+              : capitalize(section)}
           </h2>
           <div className="max-w-sm mx-auto space-y-5 md:w-2/3">
             {renderedInputs}
@@ -127,10 +136,15 @@ const AddCategory = () => {
     e.preventDefault();
 
     // Validation
-    if (formData.password.trim().length === 0)
-      return toast.error("Password is required");
-    if (!formData.email) return toast.error("Email is required");
-    if (!isValidEmail(formData.email)) return toast.error("Invalid email");
+    // if (formData.password.trim().length === 0)
+    //   return toast.error("Password is required");
+    // if (!formData.email) return toast.error("Email is required");
+    // if (!isValidEmail(formData.email)) return toast.error("Invalid email");
+    if (formData.type === "Subcategory") {
+      setFormData({ ...formData, parentId: formData.parentId });
+    } else {
+      setFormData({ ...formData, parentId: "" });
+    }
 
     setLoading(true);
 

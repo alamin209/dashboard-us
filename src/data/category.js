@@ -27,4 +27,5 @@ export const CategoryInputs = {
       options: TypesSelectOptions,
     },
   ],
+  ParentId: [{ label: "ParentId", accessor: "parentId", type: "text" }],
 };

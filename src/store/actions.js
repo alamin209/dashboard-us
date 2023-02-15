@@ -7,15 +7,19 @@ import {
   DESELECT_QUESTION,
   DESELECT_SHEET,
   DESELECT_USER,
+
   // Admins Actions
   SAVE_ADMINS_DATA,
   SAVE_CATEGORY_DATA,
   SAVE_DASHBOARD_DATA,
   SAVE_LOGGED_ADMIN_DATA,
+
   // Questions Actions
   SAVE_QUESTIONS_DATA,
+
   // Sheets Actions
   SAVE_SHEETS_DATA,
+
   // Users Actions
   SAVE_USERS_DATA,
   SELECT_ADMIN,
