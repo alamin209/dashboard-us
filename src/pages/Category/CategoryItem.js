@@ -95,7 +95,7 @@ const CategoryItem = ({ category }) => {
         <td className="data-row">
           <div className="flex gap-2 justify-end">
             <Link
-              to={`/admins/${category._id}/edit`}
+              to={`/category/${category._id}/edit`}
               className="data-row-action-btn"
             >
               {editIcon("text-[#0A6B0D]")}

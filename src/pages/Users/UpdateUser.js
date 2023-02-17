@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Select from "react-select";
+import { toast } from "react-toastify";
 
 // API
 import { getUser, updateUser } from "api/users";
@@ -18,11 +17,11 @@ import { UserInputs, UsersDeletedFields } from "data/user";
 import { saveUsersData } from "store/actions";
 
 // Helpers
-import { isValidEmail, capitalize } from "helpers/functions";
+import { capitalize, isValidEmail } from "helpers/functions";
 
 // Components
-import Header from "../../shared/Header";
 import Loading from "shared/Loading";
+import Header from "../../shared/Header";
 
 // Assets
 import { leftArrowIcon, spinnerIcon } from "../../helpers/icons";

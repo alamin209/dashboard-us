@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Select from "react-select";
+import { toast } from "react-toastify";
 
 // API
-import { updateAdmin, getAdmin } from "api/admins";
+import { getAdmin, updateAdmin } from "api/admins";
 
 // Data
 import { AdminInputs, AdminsDeletedFields } from "data/admin";

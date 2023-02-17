@@ -58,7 +58,7 @@ const pages = [
     name: "Category",
     icon: categoryIcon("", 17, 17),
     path: "/category",
-    allowedRoles: [AdminRoles.SUPER_ADMIN],
+    allowedRoles: [AdminRoles.SUPER_ADMIN, AdminRoles.ADMIN],
   },
 ];
 

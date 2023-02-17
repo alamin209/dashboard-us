@@ -19,3 +19,12 @@ export const addCategory = async (data) => {
     return error.response.data;
   }
 };
+
+export const getCategory = async (id) => {
+  try {
+    const response = await api().get(`/category/${id}`);
+    return response.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};

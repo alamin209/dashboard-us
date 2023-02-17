@@ -1,17 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Select from "react-select";
 import { toast } from "react-toastify";
 
 // API
-import { addCategory } from "api/category";
+import { addCategory, getCategory } from "api/category";
 
 // Data
 import { CategoryInputs } from "data/category";
 
 // Actions
-import { saveCategoryData } from "store/actions";
+import { saveAdminsData } from "store/actions";
 
 // Helpers
 import { capitalize } from "helpers/functions";
@@ -25,9 +25,10 @@ import useGeo from "hooks/useGeo";
 // Assets
 import { leftArrowIcon, spinnerIcon } from "../../helpers/icons";
 
-const AddCategory = () => {
+const UpdateCategory = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  let { categoryId } = useParams();
   const { fetchCategory, isCategoryLoading, formatOptions, category } =
     useGeo();
 
@@ -35,9 +36,14 @@ const AddCategory = () => {
 
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
+  const [loadingData, setLoadingData] = useState(false);
+
+  const handleInputValue = (input) => {
+    return formData[input.accessor];
+  };
 
   const handleSelectOptions = (input) => {
-    if (input.accessor === "parentId") return formatOptions(category);
+    if (input.accessor === "parentId") return formatOptions(category || []);
 
     return input.options;
   };
@@ -84,29 +90,62 @@ const AddCategory = () => {
     }
   };
 
+  const getCategoryData = async () => {
+    setLoadingData(true);
+    const response = await getCategory(categoryId);
+    setLoadingData(false);
+
+    if (!response.success) {
+      response.errors.forEach((msg) => toast.error(msg));
+      return navigate("/category");
+    }
+
+    const data = response.data;
+
+    // Delete unwanted fields
+    // Object.keys(data).forEach((key) => {
+    //   if (UsersDeletedFields.includes(key)) {
+    //     delete data[key];
+    //   }
+    // });
+
+    // Set non-exist fields as empty
+    // Object.keys(CategoryInputs).forEach((section) => {
+    //   CategoryInputs[section].forEach((input) => {
+    //     if (!data[input.accessor] && input.accessor !== "password") {
+    //       data[input.accessor] = "";
+    //     }
+    //   });
+    // });
+
+    setFormData(data);
+  };
+
+  useEffect(() => {
+    if (!Object.keys(formData).length) return;
+    fetchCategory(formData.category);
+  }, [loadingData]);
+
+  useEffect(() => {
+    getCategoryData();
+  }, [categoryId]);
+
   const renderedInputsSections = Object.keys(CategoryInputs).map((section) => {
     const renderedInputs = CategoryInputs[section].map((input) => (
       <div key={input.accessor}>
         <div className="relative">
           {input.type === "select" ? (
-            <>
-              {formData.type !== "Subcategory" &&
-              input.accessor === "parentId" ? (
-                <></>
-              ) : (
-                <Select
-                  name="role"
-                  value={handleSelectValue(input)}
-                  options={handleSelectOptions(input)}
-                  placeholder={`Select ${input.label}`}
-                  isClearable={true}
-                  onChange={(e) => handleSelectChange(e, input)}
-                  isSearchable={input.isSearchable}
-                  isDisabled={handleDisabledSelect(input)}
-                  isLoading={handleLoadingSelect(input)}
-                />
-              )}
-            </>
+            <Select
+              name="role"
+              value={handleSelectValue(input)}
+              options={handleSelectOptions(input)}
+              placeholder={`Select ${input.label}`}
+              isClearable={true}
+              onChange={(e) => handleSelectChange(e, input)}
+              isSearchable={input.isSearchable}
+              isDisabled={handleDisabledSelect(input)}
+              isLoading={handleLoadingSelect(input)}
+            />
           ) : (
             <>
               {input.type === "textArea" ? (
@@ -116,10 +155,12 @@ const AddCategory = () => {
                   onChange={(e) => handleInputChange(e, input)}
                   rows="5"
                   cols="33"
+                  value={handleInputValue(input)}
                 />
               ) : (
                 <input
                   type={input.type}
+                  // value={handleInputValue(input)}
                   className="normal-input"
                   placeholder={input.label}
                   onChange={(e) => handleInputChange(e, input)}
@@ -150,12 +191,6 @@ const AddCategory = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validation
-    if (!formData.name) return toast.error("Name is required");
-    if (!formData.slug) return toast.error("Slug is required");
-    if (!formData.feature_image) return toast.error("Image is required");
-
-    //create from file upload formData object
     let data = new FormData();
     if (formData.type === "Subcategory") {
       setFormData({ ...formData, parentId: formData.parentId });
@@ -177,7 +212,7 @@ const AddCategory = () => {
       return response.errors.forEach((msg) => toast.error(msg));
 
     dispatch(
-      saveCategoryData({
+      saveAdminsData({
         ...categoryDataFromStore,
         items: [formData, ...categoryDataFromStore.items],
       })
@@ -196,7 +231,7 @@ const AddCategory = () => {
             {leftArrowIcon()} Back
           </Link>
           <h2 className="text-2xl leading-tight text-slate-600 font-medium">
-            Add Category
+            Update Category
           </h2>
         </div>
 
@@ -225,4 +260,4 @@ const AddCategory = () => {
   );
 };
 
-export default AddCategory;
+export default UpdateCategory;
